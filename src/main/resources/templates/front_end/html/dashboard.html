@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Agendamentos</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<h1>Dashboard de Agendamentos</h1>
+
+<!-- Seção para escolher o profissional -->
+<section id="profissional-select">
+    <h2>Selecione o Profissional</h2>
+    <select id="profissionaisDropdown">
+        <option value="" disabled selected>Escolha um profissional</option>
+    </select>
+    <button id="verAgendamentosProfissional">Ver Agendamentos</button>
+</section>
+
+<!-- Seção da clínica com todos os agendamentos -->
+<section id="clinica-agendamentos">
+    <h2>Agendamentos Pendentes</h2>
+    <div id="agendamentosPendentes">
+        <!-- Agendamentos serão inseridos aqui dinamicamente -->
+    </div>
+
+    <h2>Agendamentos Processados</h2>
+    <div id="agendamentosProcessados">
+        <!-- Agendamentos processados vão para esta fila -->
+    </div>
+</section>
+
+<script src="../javascript/dashboard.js"></script>
+</body>
+</html>

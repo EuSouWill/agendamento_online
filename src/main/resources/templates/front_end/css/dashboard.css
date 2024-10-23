@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+#profissional-select, #clinica-agendamentos {
+    margin-bottom: 40px;
+}
+
+select, button {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.agendamento {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.agendamento p {
+    margin: 0;
+}
+
+.statusAgendamento {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para mensagem de sucesso */
+.mensagem-sucesso {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

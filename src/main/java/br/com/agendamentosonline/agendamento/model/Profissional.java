@@ -16,6 +16,9 @@ public class Profissional {
     private String cro;
     private String telefone;
     private String email;
+    private String cpf;
+    private String permissao;
+    private String senha;
 
     // Getters e Setters
     public Long getId() {
@@ -64,5 +67,29 @@ public class Profissional {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(String permissao) {
+        this.permissao = permissao;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

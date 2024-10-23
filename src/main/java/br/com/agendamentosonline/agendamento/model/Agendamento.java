@@ -18,6 +18,9 @@ public class Agendamento {
     private String profissional;
     private String status;
 
+    public String getStatus() {
+        return status;
+    }
 
     // Getters e Setters
     public Long getId() {

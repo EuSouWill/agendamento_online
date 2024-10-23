@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Profissionais</title>
+    <link rel="stylesheet" href="../css/profissionais.css">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Profissionais</h1>
+    <form id="form-profissional">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" required>
+
+        <label for="permissao">Permissão:</label>
+        <select id="permissao" name="permissao" required>
+            <option value="" disabled selected>Selecione a permissão</option>
+            <option value="DENTISTA">Dentista</option>
+            <option value="SECRETARIA">Secretária</option>
+            <option value="ADMINISTRADOR">Administrador</option>
+        </select>
+
+        <label for="cro">CRO:</label>
+        <input type="text" id="cro" name="cro">
+
+        <label for="especialidade">Especialidade:</label>
+        <input type="text" id="especialidade" name="especialidade">
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+<script src="../javascript/profissionais.js"></script>
+</body>
+</html>
