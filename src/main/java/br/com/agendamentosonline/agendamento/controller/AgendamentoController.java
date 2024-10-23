@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -48,8 +49,20 @@ public class AgendamentoController {
 
     // Endpoint para atualizar o status de um agendamento
     @PutMapping("/{id}/status")
-    public ResponseEntity<Agendamento> atualizarStatus(@PathVariable Long id, @RequestBody String status) {
-        Agendamento agendamentoAtualizado = agendamentoService.atualizarStatus(id, status);
+    public ResponseEntity<Agendamento> atualizarStatus(@PathVariable Long id, @RequestBody Map<String, String> statusRequest) {
+        String novoStatus = statusRequest.get("status");
+        Agendamento agendamentoAtualizado = agendamentoService.atualizarStatus(id, novoStatus);
         return ResponseEntity.ok(agendamentoAtualizado);
+    }
+
+    // Endpoint para listar agendamentos com filtro por período e status
+    @GetMapping("/filtro")
+    public ResponseEntity<List<Agendamento>> filtrarAgendamentos(
+            @RequestParam(required = false) String dataInicio,
+            @RequestParam(required = false) String dataFim,
+            @RequestParam(required = false) String status) {
+
+        List<Agendamento> agendamentosFiltrados = agendamentoService.filtrarAgendamentos(dataInicio, dataFim, status);
+        return ResponseEntity.ok(agendamentosFiltrados);
     }
 }

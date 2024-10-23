@@ -2,9 +2,17 @@ package br.com.agendamentosonline.agendamento.service;
 
 import br.com.agendamentosonline.agendamento.model.Agendamento;
 import br.com.agendamentosonline.agendamento.repository.AgendamentoRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +21,32 @@ public class AgendamentoService {
 
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;  // Injetando EntityManager
+
+    public List<Agendamento> filtrarAgendamentos(String dataInicio, String dataFim, String status) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Agendamento> cq = cb.createQuery(Agendamento.class);
+        Root<Agendamento> agendamento = cq.from(Agendamento.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (dataInicio != null && !dataInicio.isEmpty()) {
+            predicates.add(cb.greaterThanOrEqualTo(agendamento.get("data"), LocalDate.parse(dataInicio)));
+        }
+
+        if (dataFim != null && !dataFim.isEmpty()) {
+            predicates.add(cb.lessThanOrEqualTo(agendamento.get("data"), LocalDate.parse(dataFim)));
+        }
+
+        if (status != null && !status.isEmpty()) {
+            predicates.add(cb.equal(agendamento.get("status"), status));
+        }
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        return entityManager.createQuery(cq).getResultList();
+    }
 
     // Método para criar um novo agendamento
     public Agendamento salvarAgendamento(Agendamento agendamento) {
@@ -44,5 +78,10 @@ public class AgendamentoService {
         }
         throw new RuntimeException("Agendamento não encontrado!");
     }
+    public List<Agendamento> listarPendentes() {
+        return agendamentoRepository.findByStatus("PENDENTE");
+    }
+
+
 }
 

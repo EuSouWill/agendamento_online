@@ -31,6 +31,27 @@
     </div>
 </section>
 
+<label for="dataInicio">Data Início:</label>
+<input type="date" id="dataInicio">
+
+<label for="dataFim">Data Fim:</label>
+<input type="date" id="dataFim">
+
+<label for="statusFiltro">Status:</label>
+<select id="statusFiltro">
+    <option value="">Todos</option>
+    <option value="Pendente">Pendente</option>
+    <option value="Confirmado">Confirmado</option>
+    <option value="Cancelado">Cancelado</option>
+    <option value="Reagendado">Reagendado</option>
+</select>
+
+<button id="filtroAgendamentos">Buscar</button>
+
+
+<div id="listaAgendamentos"></div>
+
+
 <script src="../javascript/dashboard.js"></script>
 </body>
 </html>

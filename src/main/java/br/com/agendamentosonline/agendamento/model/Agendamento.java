@@ -17,6 +17,7 @@ public class Agendamento {
     private String hora;
     private String profissional;
     private String status;
+    private String telefone;
 
     public String getStatus() {
         return status;
@@ -66,4 +67,11 @@ public class Agendamento {
         this.status = status;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 }

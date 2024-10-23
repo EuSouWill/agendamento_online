@@ -16,6 +16,12 @@ public class PacienteService {
 
     // Método para salvar ou atualizar um paciente
     public Paciente salvarPaciente(Paciente paciente) {
+        Optional<Paciente> pacienteExistente = pacienteRepository.findByCpf(paciente.getCpf());
+        if (pacienteExistente.isPresent()) {
+            // Se o CPF já existe, retorna o paciente existente
+            return pacienteExistente.get();
+        }
+        // Se o CPF não existe, cria um novo paciente
         return pacienteRepository.save(paciente);
     }
 
