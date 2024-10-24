@@ -34,4 +34,3 @@ public class ProfissionalService {
         profissionalRepository.deleteById(id);
     }
 }
-

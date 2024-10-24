@@ -25,19 +25,19 @@ public class AgendamentoService {
     @PersistenceContext
     private EntityManager entityManager;  // Injetando EntityManager
 
-    public List<Agendamento> filtrarAgendamentos(String dataInicio, String dataFim, String status) {
+    public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Agendamento> cq = cb.createQuery(Agendamento.class);
         Root<Agendamento> agendamento = cq.from(Agendamento.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if (dataInicio != null && !dataInicio.isEmpty()) {
-            predicates.add(cb.greaterThanOrEqualTo(agendamento.get("data"), LocalDate.parse(dataInicio)));
+        if (dataInicio != null) {
+            predicates.add(cb.greaterThanOrEqualTo(agendamento.get("data"), dataInicio));
         }
 
-        if (dataFim != null && !dataFim.isEmpty()) {
-            predicates.add(cb.lessThanOrEqualTo(agendamento.get("data"), LocalDate.parse(dataFim)));
+        if (dataFim != null) {
+            predicates.add(cb.lessThanOrEqualTo(agendamento.get("data"), dataFim));
         }
 
         if (status != null && !status.isEmpty()) {
@@ -84,4 +84,3 @@ public class AgendamentoService {
 
 
 }
-

@@ -7,50 +7,62 @@
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-<h1>Dashboard de Agendamentos</h1>
-
-<!-- Seção para escolher o profissional -->
-<section id="profissional-select">
-    <h2>Selecione o Profissional</h2>
-    <select id="profissionaisDropdown">
-        <option value="" disabled selected>Escolha um profissional</option>
-    </select>
-    <button id="verAgendamentosProfissional">Ver Agendamentos</button>
-</section>
-
-<!-- Seção da clínica com todos os agendamentos -->
-<section id="clinica-agendamentos">
-    <h2>Agendamentos Pendentes</h2>
-    <div id="agendamentosPendentes">
-        <!-- Agendamentos serão inseridos aqui dinamicamente -->
+<div class="container">
+    <div class="dashboard">
+        <h2>Dashboard de Agendamentos</h2>
+        <label for="profissionaisDropdown">Selecione um profissional:</label>
+        <select id="profissionaisDropdown">
+            <option value="">-- Selecione um profissional --</option>
+        </select>
     </div>
 
-    <h2>Agendamentos Processados</h2>
-    <div id="agendamentosProcessados">
-        <!-- Agendamentos processados vão para esta fila -->
+    <div class="busca">
+        <h2>Buscar Agendamentos</h2>
+        <label for="dataInicio">Data Início:</label>
+        <input type="date" id="dataInicio">
+
+        <label for="dataFim">Data Fim:</label>
+        <input type="date" id="dataFim">
+
+        <label for="statusFiltro">Status:</label>
+        <select id="statusFiltro">
+            <option value="">Todos</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Confirmado">Confirmado</option>
+            <option value="Cancelado">Cancelado</option>
+            <option value="Reagendado">Reagendado</option>
+        </select>
+        <button id="filtroAgendamentos">Buscar Agendamentos</button>
     </div>
-</section>
+</div>
 
-<label for="dataInicio">Data Início:</label>
-<input type="date" id="dataInicio">
+<div class="agendamentos-section">
+    <div class="agendamentos" id="agendamentosPendentes">
+        <h3>Agendamentos Pendentes:</h3>
+        <!-- Agendamentos Pendentes serão listados aqui -->
+    </div>
+    <div class="agendamentos" id="agendamentosProcessados">
+        <h3>Agendamentos Processados:</h3>
+        <!-- Agendamentos Processados serão listados aqui -->
+    </div>
+</div>
 
-<label for="dataFim">Data Fim:</label>
-<input type="date" id="dataFim">
+<div id="mensagemSemAgendamentos" style="display: none;">Nenhum agendamento encontrado.</div>
 
-<label for="statusFiltro">Status:</label>
-<select id="statusFiltro">
-    <option value="">Todos</option>
-    <option value="Pendente">Pendente</option>
-    <option value="Confirmado">Confirmado</option>
-    <option value="Cancelado">Cancelado</option>
-    <option value="Reagendado">Reagendado</option>
-</select>
-
-<button id="filtroAgendamentos">Buscar</button>
-
-
-<div id="listaAgendamentos"></div>
-
+<table id="resultadosBusca">
+    <thead>
+    <tr>
+        <th>Paciente</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Profissional</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Resultados da busca serão listados aqui -->
+    </tbody>
+</table>
 
 <script src="../javascript/dashboard.js"></script>
 </body>

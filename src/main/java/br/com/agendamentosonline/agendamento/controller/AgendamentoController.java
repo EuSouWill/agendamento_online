@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,12 +59,26 @@ public class AgendamentoController {
 
     // Endpoint para listar agendamentos com filtro por período e status
     @GetMapping("/filtro")
-    public ResponseEntity<List<Agendamento>> filtrarAgendamentos(
+    public ResponseEntity<?> filtrarAgendamentos(
             @RequestParam(required = false) String dataInicio,
             @RequestParam(required = false) String dataFim,
             @RequestParam(required = false) String status) {
 
-        List<Agendamento> agendamentosFiltrados = agendamentoService.filtrarAgendamentos(dataInicio, dataFim, status);
-        return ResponseEntity.ok(agendamentosFiltrados);
+        try {
+            // Converter as Strings para LocalDate, se forem fornecidas
+            LocalDate dataInicioParsed = (dataInicio != null && !dataInicio.isEmpty()) ? LocalDate.parse(dataInicio) : null;
+            LocalDate dataFimParsed = (dataFim != null && !dataFim.isEmpty()) ? LocalDate.parse(dataFim) : null;
+
+            // Chamar o serviço com os valores convertidos
+            List<Agendamento> agendamentos = agendamentoService.filtrarAgendamentos(dataInicioParsed, dataFimParsed, status);
+            return ResponseEntity.ok(agendamentos);
+
+        } catch (DateTimeParseException e) {
+            // Caso as datas estejam em um formato inválido
+            return ResponseEntity.badRequest().body("Formato de data inválido.");
+        } catch (Exception e) {
+            // Qualquer outro erro
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao filtrar agendamentos.");
+        }
     }
 }

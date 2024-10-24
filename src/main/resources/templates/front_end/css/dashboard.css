@@ -1,58 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    background-color: #f4f4f4;
+    padding: 20px;
 }
 
-h1, h2 {
-    color: #2c3e50;
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-#profissional-select, #clinica-agendamentos {
-    margin-bottom: 40px;
+.dashboard, .busca {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%;
 }
 
-select, button {
-    margin-top: 10px;
-    padding: 5px;
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+select, input[type="date"], button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.agendamentos-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.agendamentos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%;
 }
 
 .agendamento {
     padding: 10px;
-    border: 1px solid #ccc;
     margin-bottom: 10px;
-    transition: background-color 0.3s;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
-.agendamento p {
-    margin: 0;
+.agendamento.pendente {
+    border-left: 5px solid #007BFF;
 }
 
-.statusAgendamento {
-    margin-top: 5px;
-    padding: 5px;
+.agendamento.confirmado {
+    border-left: 5px solid #28a745;
 }
 
-button {
-    background-color: #3498db;
+.agendamento.cancelado {
+    border-left: 5px solid #dc3545;
+}
+
+.agendamento.reagendado {
+    border-left: 5px solid #ffc107;
+}
+
+#mensagemSemAgendamentos {
+    margin-top: 20px;
+    font-size: 18px;
+    color: red;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #007BFF;
     color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-/* Estilos para mensagem de sucesso */
-.mensagem-sucesso {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background-color: #2ecc71;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

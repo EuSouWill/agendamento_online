@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
+
 @Entity
 public class Agendamento {
 
@@ -13,7 +15,7 @@ public class Agendamento {
     private Long id;
 
     private String nomePaciente;
-    private String data;
+    private LocalDate data;
     private String hora;
     private String profissional;
     private String status;
@@ -40,11 +42,11 @@ public class Agendamento {
         this.nomePaciente = nomePaciente;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
