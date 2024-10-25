@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const buscarAgendamentosBtn = document.getElementById('filtroAgendamentos');
     const resultadosBuscaTabela = document.getElementById('resultadosBusca');
     const mensagemSemAgendamentos = document.getElementById('mensagemSemAgendamentos');
+    const url = `http://localhost:8080/api/agendamentos/filtro?dataInicio=${encodeURIComponent(dataInicio)}&dataFim=${encodeURIComponent(dataFim)}&status=${encodeURIComponent(status)}`;
+
 
     let agendamentos = [];
 
@@ -40,22 +42,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Função para carregar agendamentos por profissional
-    function carregarAgendamentosPorProfissional(profissionalId) {
-        fetch(`http://localhost:8080/api/agendamentos?profissionalId=${profissionalId}`)
-            .then(response => response.json())
-            .then(data => {
-                agendamentos = data;
-                if (agendamentos.length === 0) {
-                    mensagemSemAgendamentos.style.display = 'block';
-                } else {
-                    mensagemSemAgendamentos.style.display = 'none';
-                    exibirAgendamentosPendentes();
-                    exibirAgendamentosProcessados();
-                }
-            })
-            .catch(error => console.error('Erro ao carregar agendamentos:', error));
-    }
+   // Função para carregar agendamentos por profissional (pelo nome do profissional)
+   function carregarAgendamentosPorProfissional(profissionalId) {
+       const profissionalNome = profissionaisDropdown.options[profissionaisDropdown.selectedIndex].textContent.split(' - ')[0];
+       const nomeFormatado = encodeURIComponent(profissionalNome); // Formata o nome para URL
+
+       fetch(`http://localhost:8080/api/agendamentos/filtro?profissional=${nomeFormatado}`)
+           .then(response => response.json())
+           .then(data => {
+               agendamentos = data;
+               if (agendamentos.length === 0) {
+                   mensagemSemAgendamentos.style.display = 'block';
+               } else {
+                   mensagemSemAgendamentos.style.display = 'none';
+                   exibirAgendamentosPendentes();
+                   exibirAgendamentosProcessados();
+               }
+           })
+           .catch(error => console.error('Erro ao carregar agendamentos:', error));
+   }
+
 
     // Exibir agendamentos pendentes
     function exibirAgendamentosPendentes() {
@@ -75,87 +81,101 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="Cancelado" ${agendamento.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
                     <option value="Reagendado" ${agendamento.status === 'Reagendado' ? 'selected' : ''}>Reagendado</option>
                 </select>
-                <button class="alterarStatus" data-id="${agendamento.id}">Alterar Status</button>
+                <button class="alterarStatus">Alterar Status</button>
             `;
-            agendamentosPendentesDiv.appendChild(div);
-        });
-
-        document.querySelectorAll('.alterarStatus').forEach(button => {
-            button.addEventListener('click', function () {
-                const agendamentoId = this.getAttribute('data-id');
-                const novoStatus = this.previousElementSibling.value;
-                alterarStatusAgendamento(agendamentoId, novoStatus);
+            div.querySelector('.alterarStatus').addEventListener('click', function () {
+                const novoStatus = div.querySelector('.statusAgendamento').value;
+                alterarStatusAgendamento(agendamento.id, novoStatus);
             });
+            agendamentosPendentesDiv.appendChild(div);
         });
     }
 
-    // Alterar status do agendamento
+     // Exibir agendamentos processados
+        function exibirAgendamentosProcessados() {
+            agendamentosProcessadosDiv.innerHTML = '';
+            const agendamentosProcessados = agendamentos.filter(agendamento =>
+                ['Confirmado', 'Cancelado', 'Reagendado'].includes(agendamento.status)
+            );
+            agendamentosProcessados.forEach(agendamento => {
+                const div = document.createElement('div');
+                div.classList.add('agendamento', agendamento.status.toLowerCase());
+                div.innerHTML = `
+                    <p>Paciente: ${agendamento.nomePaciente}</p>
+                    <p>Profissional: ${agendamento.profissional}</p>
+                    <p>Data: ${agendamento.data}</p>
+                    <p>Hora: ${agendamento.hora}</p>
+                    <select class="statusAgendamento">
+                        <option value="Confirmado" ${agendamento.status === 'Confirmado' ? 'selected' : ''}>Confirmado</option>
+                        <option value="Cancelado" ${agendamento.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                        <option value="Reagendado" ${agendamento.status === 'Reagendado' ? 'selected' : ''}>Reagendado</option>
+                    </select>
+                    <button class="alterarStatus">Alterar Status</button>
+                `;
+                div.querySelector('.alterarStatus').addEventListener('click', function () {
+                    const novoStatus = div.querySelector('.statusAgendamento').value;
+                    alterarStatusAgendamento(agendamento.id, novoStatus);
+                });
+                agendamentosProcessadosDiv.appendChild(div);
+            });
+        }
+
+    // Função para alterar o status do agendamento
     function alterarStatusAgendamento(agendamentoId, novoStatus) {
         fetch(`http://localhost:8080/api/agendamentos/${agendamentoId}/status`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ status: novoStatus })
+            body: JSON.stringify({ status: novoStatus }),
         })
-            .then(response => {
-                if (response.ok) {
-                    alert(`Status atualizado para ${novoStatus}`);
-                    carregarAgendamentosPorProfissional(profissionaisDropdown.value);
-                } else {
-                    alert('Erro ao alterar o status');
-                }
+            .then(response => response.json())
+            .then(data => {
+                console.log('Status alterado com sucesso:', data);
+                // Atualizar os agendamentos após alteração de status
+                carregarAgendamentosPorProfissional(profissionaisDropdown.value);
             })
             .catch(error => console.error('Erro ao alterar status:', error));
     }
 
-    // Exibir agendamentos processados
-    function exibirAgendamentosProcessados() {
-        agendamentosProcessadosDiv.innerHTML = '';
-        const agendamentosProcessados = agendamentos.filter(agendamento =>
-            agendamento.status !== 'Pendente'
-        );
-        agendamentosProcessados.forEach(agendamento => {
-            const div = document.createElement('div');
-            div.classList.add('agendamento', agendamento.status.toLowerCase());
-            div.innerHTML = `
-                <p>Paciente: ${agendamento.nomePaciente}</p>
-                <p>Profissional: ${agendamento.profissional}</p>
-                <p>Data: ${agendamento.data}</p>
-                <p>Hora: ${agendamento.hora}</p>
-                <p>Status: ${agendamento.status}</p>
-            `;
-            agendamentosProcessadosDiv.appendChild(div);
-        });
-    }
-
-    // Filtro de agendamentos por data e status
     buscarAgendamentosBtn.addEventListener('click', function () {
         const dataInicio = dataInicioInput.value;
         const dataFim = dataFimInput.value;
         const status = statusSelect.value;
 
-        fetch(`http://localhost:8080/api/agendamentos/filtro?dataInicio=${dataInicio}&dataFim=${dataFim}&status=${status}`)
+        // Monta a URL de filtro com parâmetros preenchidos
+        let url = `http://localhost:8080/api/agendamentos/filtro`;
+        const params = [];
+
+        if (dataInicio) params.push(`dataInicio=${encodeURIComponent(dataInicio)}`);
+        if (dataFim) params.push(`dataFim=${encodeURIComponent(dataFim)}`);
+        if (status) params.push(`status=${encodeURIComponent(status)}`);
+
+        // Adiciona parâmetros à URL
+        if (params.length > 0) url += `?${params.join('&')}`;
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                exibirResultadosBusca(data);
+                const tbody = resultadosBuscaTabela.querySelector('tbody');
+                tbody.innerHTML = '';
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">Nenhum agendamento encontrado.</td></tr>';
+                } else {
+                    data.forEach(agendamento => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${agendamento.nomePaciente}</td>
+                            <td>${agendamento.data}</td>
+                            <td>${agendamento.hora}</td>
+                            <td>${agendamento.profissional}</td>
+                            <td>${agendamento.status}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
             })
             .catch(error => console.error('Erro ao buscar agendamentos:', error));
     });
 
-    // Exibir resultados de busca por filtros
-    function exibirResultadosBusca(agendamentosFiltrados) {
-        resultadosBuscaTabela.innerHTML = '';
-        agendamentosFiltrados.forEach(agendamento => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${agendamento.nomePaciente}</td>
-                <td>${agendamento.data}</td>
-                <td>${agendamento.hora}</td>
-                <td>${agendamento.profissional}</td>
-                <td>${agendamento.status}</td>
-            `;
-            resultadosBuscaTabela.appendChild(row);
-        });
-    }
 });

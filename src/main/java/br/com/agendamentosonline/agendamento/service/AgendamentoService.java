@@ -25,7 +25,7 @@ public class AgendamentoService {
     @PersistenceContext
     private EntityManager entityManager;  // Injetando EntityManager
 
-    public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status) {
+    public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status, String profissional, String nomePaciente) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Agendamento> cq = cb.createQuery(Agendamento.class);
         Root<Agendamento> agendamento = cq.from(Agendamento.class);
@@ -44,9 +44,18 @@ public class AgendamentoService {
             predicates.add(cb.equal(agendamento.get("status"), status));
         }
 
+        if (profissional != null && !profissional.isEmpty()) {
+            predicates.add(cb.equal(agendamento.get("profissional"), profissional));
+        }
+
+        if (nomePaciente != null && !nomePaciente.isEmpty()) {
+            predicates.add(cb.like(cb.lower(agendamento.get("nomePaciente")), "%" + nomePaciente.toLowerCase() + "%"));
+        }
+
         cq.where(predicates.toArray(new Predicate[0]));
         return entityManager.createQuery(cq).getResultList();
     }
+
 
     // Método para criar um novo agendamento
     public Agendamento salvarAgendamento(Agendamento agendamento) {

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342") // Permite apenas essa origem
 @RequestMapping("/api/agendamentos")
 public class AgendamentoController {
 
@@ -62,7 +63,9 @@ public class AgendamentoController {
     public ResponseEntity<?> filtrarAgendamentos(
             @RequestParam(required = false) String dataInicio,
             @RequestParam(required = false) String dataFim,
-            @RequestParam(required = false) String status) {
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String profissional,
+            @RequestParam(required = false) String nomePaciente) {
 
         try {
             // Converter as Strings para LocalDate, se forem fornecidas
@@ -70,15 +73,15 @@ public class AgendamentoController {
             LocalDate dataFimParsed = (dataFim != null && !dataFim.isEmpty()) ? LocalDate.parse(dataFim) : null;
 
             // Chamar o serviço com os valores convertidos
-            List<Agendamento> agendamentos = agendamentoService.filtrarAgendamentos(dataInicioParsed, dataFimParsed, status);
+            List<Agendamento> agendamentos = agendamentoService.filtrarAgendamentos(
+                    dataInicioParsed, dataFimParsed, status, profissional, nomePaciente);
             return ResponseEntity.ok(agendamentos);
 
         } catch (DateTimeParseException e) {
-            // Caso as datas estejam em um formato inválido
             return ResponseEntity.badRequest().body("Formato de data inválido.");
         } catch (Exception e) {
-            // Qualquer outro erro
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao filtrar agendamentos.");
         }
     }
+
 }
