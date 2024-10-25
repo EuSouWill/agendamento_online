@@ -1,12 +1,16 @@
 package br.com.agendamentosonline.agendamento.controller;
 
+import br.com.agendamentosonline.agendamento.exception.ResourceNotFoundException;
 import br.com.agendamentosonline.agendamento.model.Agendamento;
+import br.com.agendamentosonline.agendamento.repository.AgendamentoRepository;
 import br.com.agendamentosonline.agendamento.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -17,6 +21,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:63342") // Permite apenas essa origem
 @RequestMapping("/api/agendamentos")
 public class AgendamentoController {
+    @Autowired
+    private AgendamentoRepository agendamentoRepository;
 
     @Autowired
     private AgendamentoService agendamentoService;
@@ -82,6 +88,24 @@ public class AgendamentoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao filtrar agendamentos.");
         }
+    }
+    @GetMapping("/api/agendamentos/{id}/whatsapp")
+    public ResponseEntity<String> enviarWhatsApp(@PathVariable Long id) {
+        // Exemplo: busca agendamento no banco de dados
+        Agendamento agendamento = agendamentoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com ID: " + id));
+
+        String numeroPaciente = agendamento.getTelefone();
+        String nomePaciente = agendamento.getNomePaciente();
+        String data = agendamento.getData().toString();
+        String hora = agendamento.getHora();
+
+        // Monta mensagem personalizada
+        String mensagem = "Olá " + nomePaciente + ", sua consulta está confirmada para o dia " + data + " às " + hora + ".";
+        String encodedMessage = URLEncoder.encode(mensagem, StandardCharsets.UTF_8);
+        String url = "https://wa.me/" + numeroPaciente + "?text=" + encodedMessage;
+
+        return ResponseEntity.ok(url);
     }
 
 }
