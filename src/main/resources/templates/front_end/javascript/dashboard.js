@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 option.value = profissional.id;
                 option.textContent = `${profissional.nome} - ${profissional.especialidade}`;
                 profissionaisDropdown.appendChild(option);
+
             });
         })
         .catch(error => console.error('Erro ao carregar profissionais:', error));
@@ -169,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (dataInicio) params.push(`dataInicio=${encodeURIComponent(dataInicio)}`);
         if (dataFim) params.push(`dataFim=${encodeURIComponent(dataFim)}`);
         if (status) params.push(`status=${encodeURIComponent(status)}`);
+
 
         // Adiciona parâmetros à URL
         if (params.length > 0) url += `?${params.join('&')}`;
