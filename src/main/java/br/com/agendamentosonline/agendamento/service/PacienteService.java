@@ -1,5 +1,6 @@
 package br.com.agendamentosonline.agendamento.service;
 
+import br.com.agendamentosonline.agendamento.exception.ResourceNotFoundException;
 import br.com.agendamentosonline.agendamento.model.Paciente;
 import br.com.agendamentosonline.agendamento.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,17 @@ public class PacienteService {
     // Método para deletar um paciente pelo ID
     public void deletarPorId(Long id) {
         pacienteRepository.deleteById(id);
+    }
+
+    public Paciente atualizarPaciente(Long id, Paciente pacienteAtualizado) {
+        return pacienteRepository.findById(id)
+                .map(paciente -> {
+                    paciente.setNome(pacienteAtualizado.getNome());
+                    paciente.setCpf(pacienteAtualizado.getCpf());
+                    paciente.setEmail(pacienteAtualizado.getEmail());
+                    paciente.setTelefone(pacienteAtualizado.getTelefone());
+                    return pacienteRepository.save(paciente);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
     }
 }

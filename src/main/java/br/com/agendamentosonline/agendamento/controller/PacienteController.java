@@ -45,4 +45,9 @@ public class PacienteController {
         pacienteService.deletarPorId(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Paciente> atualizarPaciente(@PathVariable Long id, @RequestBody Paciente pacienteAtualizado) {
+        Paciente atualizado = pacienteService.atualizarPaciente(id, pacienteAtualizado);
+        return ResponseEntity.ok(atualizado);
+    }
 }
