@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowedOrigins("http://localhost:63342", "https://simplesagendamento.onrender.com",
                         "https://agendamento-online-7rgpgl6t6-eusouwills-projects.vercel.app/",
-                        "https://neon-pasca-6fd4cc.netlify.app/")
+                        "https://simplesagenda.netlify.app/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
