@@ -1,7 +1,7 @@
 // URL das APIs
-const profissionaisApiUrl = "https://simplesagendamento.onrender.com:8080/api/profissionais";
-const pacientesApiUrl = "https://simplesagendamento.onrender.com:8080/api/pacientes";
-const agendamentosApiUrl = "https://simplesagendamento.onrender.com:8080/api/agendamentos";
+const profissionaisApiUrl = "https://simplesagendamento.onrender.com/api/profissionais";
+const pacientesApiUrl = "https://simplesagendamento.onrender.com/api/pacientes";
+const agendamentosApiUrl = "https://simplesagendamento.onrender.com/api/agendamentos";
 
 // Elementos do DOM
 const agendamentoForm = document.getElementById('agendamentoForm');
