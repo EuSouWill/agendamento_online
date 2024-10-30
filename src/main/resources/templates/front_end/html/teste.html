@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+
+    <!-- CSS do FullCalendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="../css/teste.css">
+</head>
+<body>
+<!-- Barra superior -->
+<header class="header">
+    <div class="header-left">
+        <h2>Simples Dental > Agenda</h2>
+    </div>
+    <div class="header-right">
+        <span>william.regis@simplesdental.com</span>
+        <span>GESTÃO</span>
+    </div>
+</header>
+
+<!-- Menu lateral -->
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li>Inteligência</li>
+            <li>Pacientes</li>
+            <li>Agenda</li>
+            <li>Vendas</li>
+            <li>Financeiro</li>
+            <li>Controle de prótese</li>
+            <li>Marketing</li>
+            <li>Estoque</li>
+            <li>Ajustes</li>
+            <li>Loja</li>
+            <li>Como funciona</li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Conteúdo principal -->
+<main class="main-content">
+    <!-- Botão e Navegação de Data -->
+    <div class="calendar-toolbar">
+        <button class="add-button">+</button>
+        <div class="date-navigation">
+            <button id="todayButton">Hoje</button>
+            <input type="month" id="monthPicker">
+            <select id="viewSelector">
+                <option value="timeGridWeek">Semana</option>
+                <option value="timeGridDay">Dia</option>
+            </select>
+        </div>
+    </div>
+    <!-- Calendário -->
+    <div id="calendar"></div>
+</main>
+
+<!-- Script do FullCalendar -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/locales/pt-br.js"></script>
+
+<!-- Script personalizado -->
+<script src="../javascript/teste.js"></script>
+</body>
+</html>

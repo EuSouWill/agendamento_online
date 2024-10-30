@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h2 {
+    font-size: 18px;
+}
+
+.header-right span {
+    margin-left: 15px;
+}
+
+.sidebar {
+    background-color: #f5f5f5;
+    padding: 15px;
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+}
+
+.sidebar nav ul li {
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.calendar-toolbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.add-button {
+    font-size: 24px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.date-navigation {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+#todayButton, #viewSelector, #monthPicker {
+    margin: 0 5px;
+    padding: 5px;
+}
+
+#calendar {
+    max-width: 1000px;
+    margin: auto;
+}

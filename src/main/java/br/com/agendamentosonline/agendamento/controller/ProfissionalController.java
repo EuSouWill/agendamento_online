@@ -25,7 +25,7 @@ public class ProfissionalController {
     }
 
     // Endpoint para listar todos os profissionais
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<Profissional>> listarTodos() {
         List<Profissional> profissionais = profissionalService.listarTodos();
         return ResponseEntity.ok(profissionais);

@@ -11,7 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:63342", "https://simplesagendamento.onrender.com",
+                .allowedOrigins("http://localhost:63342",
+                        "http://localhost:8080",
+                        "https://simplesagendamento.onrender.com",
                         "https://agendamento-online-7rgpgl6t6-eusouwills-projects.vercel.app/",
                         "https://agendamento-online-omega.vercel.app/",
                         "https://simplesagenda.netlify.app/",

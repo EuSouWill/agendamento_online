@@ -2,8 +2,11 @@ package br.com.agendamentosonline.agendamento.controller;
 
 import br.com.agendamentosonline.agendamento.exception.ResourceNotFoundException;
 import br.com.agendamentosonline.agendamento.model.Agendamento;
+import br.com.agendamentosonline.agendamento.model.Profissional;
 import br.com.agendamentosonline.agendamento.repository.AgendamentoRepository;
+import br.com.agendamentosonline.agendamento.repository.ProfissionalRepository;
 import br.com.agendamentosonline.agendamento.service.AgendamentoService;
+import br.com.agendamentosonline.agendamento.service.DisponibilidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +30,39 @@ public class AgendamentoController {
     @Autowired
     private AgendamentoService agendamentoService;
 
-    // Endpoint para criar um novo agendamento
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
+
+    @Autowired
+    private DisponibilidadeService disponibilidadeService;
+
     @PostMapping
-    public ResponseEntity<Agendamento> criarAgendamento(@RequestBody Agendamento agendamento) {
-        Agendamento novoAgendamento = agendamentoService.salvarAgendamento(agendamento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoAgendamento);
+    public ResponseEntity<?> criarAgendamento(@RequestBody Agendamento agendamento) {
+        try {
+            // Buscar o profissional com base no nome ou outro identificador no agendamento
+            Optional<Profissional> profissionalOpt = profissionalRepository.findByNome(agendamento.getProfissional());
+
+            if (profissionalOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profissional não encontrado.");
+            }
+
+            Profissional profissional = profissionalOpt.get();
+
+            // Verificar a disponibilidade do profissional no horário solicitado
+            String mensagemErro = disponibilidadeService.validarAgendamento(agendamento, profissional);
+
+            if (mensagemErro == null) {
+                Agendamento novoAgendamento = agendamentoService.salvarAgendamento(agendamento);
+                return ResponseEntity.status(HttpStatus.CREATED).body(novoAgendamento);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensagemErro);
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar agendamento.");
+        }
     }
+
 
     // Endpoint para listar todos os agendamentos
     @GetMapping

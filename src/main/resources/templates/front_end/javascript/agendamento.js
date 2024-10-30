@@ -1,7 +1,7 @@
 // URL das APIs
-const profissionaisApiUrl = "https://simplesagendamento.onrender.com/api/profissionais";
-const pacientesApiUrl = "https://simplesagendamento.onrender.com/api/pacientes";
-const agendamentosApiUrl = "https://simplesagendamento.onrender.com/api/agendamentos";
+const profissionaisApiUrl = "http://localhost:8080/api/profissionais";
+const pacientesApiUrl = "http://localhost:8080/api/pacientes"; // Corrigido
+const agendamentosApiUrl = "http://localhost:8080/api/agendamentos"; // Corrigido
 
 // Elementos do DOM
 const agendamentoForm = document.getElementById('agendamentoForm');
@@ -19,7 +19,7 @@ function carregarProfissionais() {
         .then(profissionais => {
             profissionais.forEach(profissional => {
                 const option = document.createElement('option');
-                option.value = profissional.nome;
+                option.value = profissional.nome; // Usar o ID se necessário
                 option.textContent = profissional.nome;
                 profissionalSelect.appendChild(option);
             });
@@ -30,6 +30,7 @@ function carregarProfissionais() {
 // Função para enviar os dados do paciente e criar um agendamento
 agendamentoForm.addEventListener('submit', function(event) {
     event.preventDefault();
+    console.log('Formulário enviado!');
 
     const pacienteData = {
         nome: document.getElementById('nome').value,
@@ -62,25 +63,25 @@ agendamentoForm.addEventListener('submit', function(event) {
     })
     .then(() => {
         // Após cadastrar o paciente, enviar o agendamento para a API de agendamentos
-        fetch(agendamentosApiUrl, {
+        return fetch(agendamentosApiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(agendamentoData)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Consulta agendada com sucesso!');
-                agendamentoForm.reset();
-            } else {
-                throw new Error('Erro ao agendar consulta.');
-            }
-        })
-        .catch(error => console.error('Erro ao agendar consulta:', error));
+        });
     })
-    .catch(error => console.error('Erro ao cadastrar paciente:', error));
+    .then(response => {
+        if (response.ok) {
+            alert('Consulta agendada com sucesso!');
+            agendamentoForm.reset();
+        } else {
+            throw new Error('Erro ao agendar consulta.');
+        }
+    })
+    .catch(error => console.error('Erro:', error));
 });
 
 // Carregar profissionais no carregamento da página
 window.onload = carregarProfissionais;
+//esse codigo.

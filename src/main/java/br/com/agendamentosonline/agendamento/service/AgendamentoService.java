@@ -23,7 +23,10 @@ public class AgendamentoService {
     private AgendamentoRepository agendamentoRepository;
 
     @PersistenceContext
-    private EntityManager entityManager;  // Injetando EntityManager
+    private EntityManager entityManager; // Injetando EntityManager
+
+    @Autowired
+    private DisponibilidadeService disponibilidadeService;
 
     public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status, String profissional, String nomePaciente) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

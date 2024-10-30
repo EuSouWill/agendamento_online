@@ -32,7 +32,7 @@ document.getElementById("form-profissional").addEventListener("submit", async (e
     };
 
     try {
-        const response = await fetch("https://simplesagendamento.onrender.com/api/profissionais", {
+        const response = await fetch("http://localhost:8080/api/profissionais", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

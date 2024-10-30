@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Profissional</title>
+    <link rel="stylesheet" href="../css/dashboardProfissional.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <div id="login-section">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <button id="login-btn">Carregar Profissional</button>
+    </div>
+
+    <div id="availability-section" style="display: none;">
+        <h2>Configurações de Disponibilidade</h2>
+        <form id="form-disponibilidade">
+            <input type="hidden" id="profissional-id" value="">
+
+            <div class="day-select">
+                <label><input type="checkbox" name="diaSemana" value="MONDAY" checked> Seg</label>
+                <label><input type="checkbox" name="diaSemana" value="TUESDAY" checked> Ter</label>
+                <label><input type="checkbox" name="diaSemana" value="WEDNESDAY" checked> Qua</label>
+                <label><input type="checkbox" name="diaSemana" value="THURSDAY" checked> Qui</label>
+                <label><input type="checkbox" name="diaSemana" value="FRIDAY" checked> Sex</label>
+                <label><input type="checkbox" name="diaSemana" value="SATURDAY" checked> Sáb</label>
+                <label><input type="checkbox" name="diaSemana" value="SUNDAY" checked> Dom</label>
+            </div>
+
+            <div class="time-inputs">
+                <label>Hora de Início:</label>
+                <input type="time" id="hora-inicio" name="horaInicio" value="08:00" required>
+                <label>Hora de Fim:</label>
+                <input type="time" id="hora-fim" name="horaFim" value="18:00" required>
+            </div>
+
+            <button type="submit" class="save-btn">Salvar</button>
+        </form>
+        <h3>Suas Disponibilidades</h3>
+        <ul id="lista-disponibilidades">
+            <!-- Disponibilidades existentes serão listadas aqui -->
+        </ul>
+    </div>
+</div>
+<script src="../javascript/dashboardProfissional.js"></script>
+</body>
+</html>
