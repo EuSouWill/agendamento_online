@@ -3,7 +3,7 @@ document.getElementById('login-btn').addEventListener('click', async function ()
     const senha = document.getElementById('senha').value;
 
     try {
-        const response = await fetch(`http://localhost:8080/api/profissionais`);
+        const response = await fetch(`https://simplesagendamento.onrender.com/api/profissionais`);
 
         if (!response.ok) {
             throw new Error("Erro ao acessar a API");
@@ -39,7 +39,7 @@ document.getElementById('form-disponibilidade').addEventListener('submit', async
 
     try {
         for (let diaSemana of diasSemana) {
-            const response = await fetch(`http://localhost:8080/api/disponibilidades?profissionalId=${profissionalId}&diaSemana=${diaSemana}&horaInicio=${horaInicio}&horaFim=${horaFim}`, {
+            const response = await fetch(`https://simplesagendamento.onrender.com/api/disponibilidades?profissionalId=${profissionalId}&diaSemana=${diaSemana}&horaInicio=${horaInicio}&horaFim=${horaFim}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ document.getElementById('form-disponibilidade').addEventListener('submit', async
 
 async function carregarDisponibilidades(profissionalId) {
     try {
-        const response = await fetch(`http://localhost:8080/api/disponibilidades?profissionalId=${profissionalId}`);
+        const response = await fetch(`https://simplesagendamento.onrender.com/api/disponibilidades?profissionalId=${profissionalId}`);
 
         if (!response.ok) {
             throw new Error("Erro ao acessar as disponibilidades");

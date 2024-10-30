@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let agendamentos = [];
 
     // Carregar lista de profissionais
-    fetch('http://localhost:8080/api/profissionais')
+    fetch('https://simplesagendamento.onrender.com/api/profissionais')
         .then(response => response.json())
         .then(profissionais => {
             profissionais.forEach(profissional => {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const profissionalNome = profissionaisDropdown.options[profissionaisDropdown.selectedIndex].textContent.split(' - ')[0];
         const nomeFormatado = encodeURIComponent(profissionalNome); // Formata o nome para URL
 
-        fetch(`http://localhost:8080/api/agendamentos/filtro?profissional=${nomeFormatado}`)
+        fetch(`https://simplesagendamento.onrender.com/api/agendamentos/filtro?profissional=${nomeFormatado}`)
             .then(response => response.json())
             .then(data => {
                 agendamentos = data;
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para alterar o status do agendamento
     function alterarStatusAgendamento(agendamento, novoStatus) {
-        fetch(`http://localhost:8080/api/agendamentos/${agendamento.id}/status`, {
+        fetch(`https://simplesagendamento.onrender.com/api/agendamentos/${agendamento.id}/status`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const status = statusSelect.value;
 
         // Monta a URL de filtro com parâmetros preenchidos
-        let url = `http://localhost:8080/api/agendamentos/filtro`;
+        let url = `https://simplesagendamento.onrender.com/api/agendamentos/filtro`;
         const params = [];
 
         if (dataInicio) params.push(`dataInicio=${encodeURIComponent(dataInicio)}`);
