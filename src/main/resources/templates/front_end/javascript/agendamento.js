@@ -1,5 +1,5 @@
 // URL das APIs
-const profissionaisApiUrl = "http://localhost:8080/api/profissionais";
+const profissionaisApiUrl = "https://simplesagendamento.onrender.com/api/profissionais";
 const pacientesApiUrl = "http://localhost:8080/api/pacientes"; // Corrigido
 const agendamentosApiUrl = "http://localhost:8080/api/agendamentos"; // Corrigido
 
