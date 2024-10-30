@@ -16,6 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://simplesagendamento.onrender.com",
                         "https://agendamento-online-7rgpgl6t6-eusouwills-projects.vercel.app/",
                         "https://agendamento-online-omega.vercel.app/",
+                        "https://simplesagenda.netlify.app/",
                         "https://simplesagendamento.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
