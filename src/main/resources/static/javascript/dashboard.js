@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (dataInicio) params.push(`dataInicio=${encodeURIComponent(dataInicio)}`);
         if (dataFim) params.push(`dataFim=${encodeURIComponent(dataFim)}`);
         if (status) params.push(`status=${encodeURIComponent(status)}`);
-        if (origem) params.push(`origem=${encodeURIComponent(origem)}`);
+        if (origem) params.push(`origem=${encodeURIComponent(origem)}`)
 
 
 
@@ -205,5 +205,4 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Erro ao buscar agendamentos:', error));
     });
 });
-
 // este código.

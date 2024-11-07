@@ -7,7 +7,7 @@ const agendamentosApiUrl = "http://localhost:8080/api/agendamentos";
 const agendamentoForm = document.getElementById('agendamentoForm');
 const profissionalSelect = document.getElementById('profissional');
 
-// Função para carregar profissionais disponíveis
+// Função para carregar profissionais disponíveis com permissão "DENTISTA"
 function carregarProfissionais() {
     fetch(profissionaisApiUrl)
         .then(response => {
@@ -17,7 +17,10 @@ function carregarProfissionais() {
             return response.json();
         })
         .then(profissionais => {
-            profissionais.forEach(profissional => {
+            // Filtrar apenas os profissionais que têm permissão "DENTISTA"
+            const dentistas = profissionais.filter(profissional => profissional.permissao === "DENTISTA");
+
+            dentistas.forEach(profissional => {
                 const option = document.createElement('option');
                 option.value = profissional.nome; // Usar o ID se necessário
                 option.textContent = profissional.nome;
@@ -26,6 +29,7 @@ function carregarProfissionais() {
         })
         .catch(error => console.error('Erro ao carregar profissionais:', error));
 }
+
 
 // Função para enviar os dados do paciente e criar um agendamento
 agendamentoForm.addEventListener('submit', function(event) {
@@ -45,7 +49,7 @@ agendamentoForm.addEventListener('submit', function(event) {
         nomePaciente: pacienteData.nome,
         profissional: document.getElementById('profissional').value,
         status: "Pendente",
-        comoChegouNaClinica: document.getElementById('comoChegouNaClinica').value // novo campo
+        comoChegouNaClinica: document.getElementById('comoChegouNaClinica').value
 
     };
 
@@ -101,11 +105,8 @@ function resetForm() {
     document.getElementById('profissional').value = '';
 }
 
-// Carregar profissionais no carregamento da página
-window.onload = carregarProfissionais;
-
-
 
 // Carregar profissionais no carregamento da página
 window.onload = carregarProfissionais;
+
 //esse codigo.
