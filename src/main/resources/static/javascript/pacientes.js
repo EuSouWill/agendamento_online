@@ -1,7 +1,7 @@
 // URLs das APIs
-const profissionaisApiUrl = "https://simplesagendamento.onrender.com/api/profissionais";
-const pacientesApiUrl = "https://simplesagendamento.onrender.com/api/pacientes";
-const agendamentosApiUrl = "https://simplesagendamento.onrender.com/api/agendamentos";
+const profissionaisApiUrl = "http://localhost:8080/api/profissionais";
+const pacientesApiUrl = "http://localhost:8080/api/pacientes";
+const agendamentosApiUrl = "http://localhost:8080/api/agendamentos";
 
 // Elementos do DOM
 const tabelaPacientes = document.getElementById('tabelaPacientes').querySelector('tbody');
@@ -179,7 +179,7 @@ formNovoPaciente.addEventListener('submit', function (event) {
         telefone: document.getElementById('telefone').value,
     };
 
-    fetch("https://simplesagendamento.onrender.com/api/pacientes", {
+    fetch("http://localhost:8080/api/pacientes", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(novoPacienteData),
@@ -223,14 +223,14 @@ formNovoPaciente.addEventListener('submit', function (event) {
     };
 
     // Verifica se o CPF já existe antes de criar o paciente
-    fetch(`https://simplesagendamento.onrender.com/api/pacientes?cpf=${novoPacienteData.cpf}`)
+    fetch(`http://localhost:8080/api/pacientes?cpf=${novoPacienteData.cpf}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {  // Verifica se algum paciente com o mesmo CPF foi encontrado
                 alert("Erro: Já existe um paciente cadastrado com esse CPF.");
             } else {
                 // Caso o CPF seja único, faz a criação do paciente
-                return fetch("https://simplesagendamento.onrender.com/api/pacientes", {
+                return fetch("http://localhost:8080/api/pacientes", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(novoPacienteData),

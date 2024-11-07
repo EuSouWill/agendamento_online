@@ -28,16 +28,25 @@ public class AgendamentoService {
     @Autowired
     private DisponibilidadeService disponibilidadeService;
 
-    public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status, String profissional, String nomePaciente) {
+    public List<Agendamento> filtrarAgendamentos(LocalDate dataInicio, LocalDate dataFim, String status, String profissional, String nomePaciente, String origem) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Agendamento> cq = cb.createQuery(Agendamento.class);
         Root<Agendamento> agendamento = cq.from(Agendamento.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
+
+
+        if (origem != null && !origem.isEmpty()) {
+            predicates.add(cb.equal(agendamento.get("comoChegouNaClinica"), origem));
+        }
+
+
         if (dataInicio != null) {
             predicates.add(cb.greaterThanOrEqualTo(agendamento.get("data"), dataInicio));
         }
+
+
 
         if (dataFim != null) {
             predicates.add(cb.lessThanOrEqualTo(agendamento.get("data"), dataFim));

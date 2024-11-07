@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const buscarAgendamentosBtn = document.getElementById('filtroAgendamentos');
     const resultadosBuscaTabela = document.getElementById('resultadosBusca');
     const mensagemSemAgendamentos = document.getElementById('mensagemSemAgendamentos');
+    const origemSelect = document.getElementById('origemFiltro');
+
 
     let agendamentos = [];
 
     // Carregar lista de profissionais
-    fetch('https://simplesagendamento.onrender.com/api/profissionais')
+    fetch('http://localhost:8080/api/profissionais')
         .then(response => response.json())
         .then(profissionais => {
             profissionais.forEach(profissional => {
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const profissionalNome = profissionaisDropdown.options[profissionaisDropdown.selectedIndex].textContent.split(' - ')[0];
         const nomeFormatado = encodeURIComponent(profissionalNome); // Formata o nome para URL
 
-        fetch(`https://simplesagendamento.onrender.com/api/agendamentos/filtro?profissional=${nomeFormatado}`)
+        fetch(`http://localhost:8080/api/agendamentos/filtro?profissional=${nomeFormatado}`)
             .then(response => response.json())
             .then(data => {
                 agendamentos = data;
@@ -138,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para alterar o status do agendamento
     function alterarStatusAgendamento(agendamento, novoStatus) {
-        fetch(`https://simplesagendamento.onrender.com/api/agendamentos/${agendamento.id}/status`, {
+        fetch(`http://localhost:8080/api/agendamentos/${agendamento.id}/status`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -162,14 +164,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const dataInicio = dataInicioInput.value;
         const dataFim = dataFimInput.value;
         const status = statusSelect.value;
+        const origem = origemSelect.value;
 
         // Monta a URL de filtro com parâmetros preenchidos
-        let url = `https://simplesagendamento.onrender.com/api/agendamentos/filtro`;
+        let url = `http://localhost:8080/api/agendamentos/filtro`;
         const params = [];
 
         if (dataInicio) params.push(`dataInicio=${encodeURIComponent(dataInicio)}`);
         if (dataFim) params.push(`dataFim=${encodeURIComponent(dataFim)}`);
         if (status) params.push(`status=${encodeURIComponent(status)}`);
+        if (origem) params.push(`origem=${encodeURIComponent(origem)}`);
+
 
 
         // Adiciona parâmetros à URL
@@ -191,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${agendamento.hora}</td>
                             <td>${agendamento.profissional}</td>
                             <td>${agendamento.status}</td>
+                            <td>${agendamento.comoChegouNaClinica || 'Não Informado'}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -199,3 +205,5 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Erro ao buscar agendamentos:', error));
     });
 });
+
+// este código.

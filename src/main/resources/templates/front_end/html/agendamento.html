@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento de Consulta</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../../static/css/style.css">
 </head>
 <body>
 <div class="form-container">
@@ -22,6 +22,7 @@
         <label for="telefone">Telefone:</label>
         <input type="text" id="telefone" name="telefone" required>
 
+
         <label for="profissional">Profissional:</label>
         <select id="profissional" name="profissional" required>
             <!-- Opções preenchidas dinamicamente pelo JS -->
@@ -33,10 +34,19 @@
         <label for="hora">Hora da Consulta:</label>
         <input type="time" id="hora" name="hora" required>
 
+        <label for="comoChegouNaClinica">Como chegou na clínica:</label>
+        <select id="comoChegouNaClinica" name="comoChegouNaClinica" required>
+            <option value="">Selecione uma opção</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Site do dentista">Site do dentista</option>
+            <option value="Outros">Outros</option>
+        </select>
+
         <button type="submit">Agendar</button>
     </form>
 </div>
 
-<script src="../javascript/agendamento.js"></script>
+<script src="../../../static/javascript/agendamento.js"></script>
 </body>
 </html>

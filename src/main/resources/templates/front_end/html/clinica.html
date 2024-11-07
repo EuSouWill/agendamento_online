@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento Simples Dental</title>
+    <link rel="stylesheet" href="/static/css/clinica.css">
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <img src="/static/img/background_login.jpg" alt="Simples Dental">
+    </div>
+    <form id="loginForm">
+        <label for="username">E-mail*</label>
+        <input type="text" id="username" name="username" required placeholder="E-mail">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" required placeholder="Senha" onkeydown="handleKeyDown(event)">
+        <a href="">Esqueci minha senha</a> <br><br>
+        <button type="button" class="btn" onclick="loginWithDelay()">ENTRAR NO SISTEMA</button>
+        <br>
+        <a>Se ainda não tiver uma conta no Simples Dental, <a href="/front-end/html/cadastro.html">cadastre-se agora.</a></a> <br>
+        <footer>
+            <br>
+            <a href="link">Política de cookies</a>
+        </footer>
+    </form>
+</div>
+<script>
+    async function login() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        try {
+            // Envia a requisição para o backend
+            const response = await fetch('http://localhost:8080/api/clinicas/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: username, senha: password })
+            });
+
+            if (response.ok) {
+                // Armazena o status de login e redireciona para a página inicial
+                sessionStorage.setItem('isLoggedIn', 'true');
+                location.href = 'index.html';
+            } else if (response.status === 401) {
+                alert('Email ou senha incorretos. Tente novamente.');
+            } else {
+                alert('Erro ao tentar fazer login. Por favor, tente mais tarde.');
+            }
+        } catch (error) {
+            console.error('Erro ao autenticar:', error);
+            alert('Erro ao conectar-se ao servidor.');
+        }
+    }
+
+    function loginWithDelay(event) {
+        // Evita o envio automático do formulário
+        if (event) event.preventDefault();
+
+        // Simula o atraso de 1 segundo antes de chamar a função de login
+        setTimeout(login, 1000);
+    }
+
+    function handleKeyDown(event) {
+        if (event.keyCode === 13) {
+            loginWithDelay(event);
+        }
+    }
+</script>
+</body>
+</html>

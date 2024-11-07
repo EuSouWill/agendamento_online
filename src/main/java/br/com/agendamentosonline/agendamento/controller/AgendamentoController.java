@@ -59,7 +59,7 @@ public class AgendamentoController {
             }
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar agendamento.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar agendamento. Teste will");
         }
     }
 
@@ -101,7 +101,8 @@ public class AgendamentoController {
             @RequestParam(required = false) String dataFim,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String profissional,
-            @RequestParam(required = false) String nomePaciente) {
+            @RequestParam(required = false) String nomePaciente,
+            @RequestParam(required = false) String origem ){
 
         try {
             // Converter as Strings para LocalDate, se forem fornecidas
@@ -110,7 +111,7 @@ public class AgendamentoController {
 
             // Chamar o serviço com os valores convertidos
             List<Agendamento> agendamentos = agendamentoService.filtrarAgendamentos(
-                    dataInicioParsed, dataFimParsed, status, profissional, nomePaciente);
+                    dataInicioParsed, dataFimParsed, status, profissional, nomePaciente, origem);
             return ResponseEntity.ok(agendamentos);
 
         } catch (DateTimeParseException e) {

@@ -9,11 +9,17 @@ import java.util.List;
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
     List<Agendamento> findByStatus(String status);
 
-    // Buscar agendamentos por período e status
+    // Buscar agendamentos por período e status *** verificar se busca pelo profissional tb
     List<Agendamento> findByDataBetweenAndStatus(LocalDate dataInicio, LocalDate dataFim, String status);
 
     // Buscar agendamentos por período
     List<Agendamento> findByDataBetween(LocalDate dataInicio, LocalDate dataFim);
+
+    List<Agendamento> findByComoChegouNaClinica(String origem);
+
+    List<Agendamento> findByProfissional(String profissional);
+
+
 
 
 

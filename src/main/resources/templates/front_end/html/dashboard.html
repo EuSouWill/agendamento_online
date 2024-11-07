@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Agendamentos</title>
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
 </head>
 <body>
 <div class="container">
@@ -33,6 +33,24 @@
             <option value="Reagendado">Reagendado</option>
         </select>
 
+
+
+        <label for="origemFiltro">Como Chegou na Clínica:</label>
+        <select id="origemFiltro">
+            <option value="">Todas as Origens</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Site do Dentista">Site do Dentista</option>
+            <option value="Outros">Outros</option>
+        </select>
+
+<!--        <label for="profissionaisDropdown">Selecione um profissional:</label>-->
+<!--        <select id="profissionaisDropdown">-->
+<!--            <option value="">&#45;&#45; Selecione um profissional &#45;&#45;</option>-->
+        </select>
+
+
+
         <button id="filtroAgendamentos">Buscar Agendamentos</button>
     </div>
 </div>
@@ -56,12 +74,15 @@
         <th>Hora</th>
         <th>Profissional</th>
         <th>Status</th>
+        <th>Origem</th>
     </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
 
-<script src="../javascript/dashboard.js"></script>
+<script src="/static/javascript/dashboard.js"></script>
 </body>
 </html>
+
+<!--este codigo-->

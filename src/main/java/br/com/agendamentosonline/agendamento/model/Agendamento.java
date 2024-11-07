@@ -18,4 +18,5 @@ public class Agendamento {
     private String profissional;
     private String status;
     private String telefone;
+    private String comoChegouNaClinica;
 }
