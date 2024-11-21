@@ -1,5 +1,8 @@
 // URL das APIs
-const profissionaisApiUrl = "http://localhost:8080/api/profissionais";
+//Aqui eu alterno entre api local ou web(em teste utilizo a localhost e em deploy utilizo a web)
+//const profissionaisApiUrl = "http://localhost:8080/api/profissionais";
+const profissionaisApiUrl =  "https://simplesagendamento.onrender.com/api/profissionais";
+
 const pacientesApiUrl = "http://localhost:8080/api/pacientes";
 const agendamentosApiUrl = "http://localhost:8080/api/agendamentos";
 
